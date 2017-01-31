@@ -3,7 +3,6 @@ package com.ninekao.rest_service.controller.project;
 import com.ninekao.rest_service.domain.entity.Project;
 import com.ninekao.rest_service.domain.entity.Task;
 import com.ninekao.rest_service.domain.service.ProjectService;
-import com.ninekao.rest_service.domain.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Created by Kabiz on 29/10/2559.
- */
 @RestController
 @RequestMapping("projects")
 public class ProjectController {
@@ -21,8 +17,8 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
-    @Autowired
-    private TaskService taskService;
+//    @Autowired
+//    private TaskService taskService;
 
     @GetMapping
     public List<Project> getAllProject() {
@@ -36,7 +32,7 @@ public class ProjectController {
 
     @GetMapping("/{id}/tasks")
     public List<Task> getTask(@PathVariable("id") int id) {
-        return taskService.findTaskByProjectId(id);
+        return projectService.findTaskByProjectId(id);
     }
 
     @PostMapping

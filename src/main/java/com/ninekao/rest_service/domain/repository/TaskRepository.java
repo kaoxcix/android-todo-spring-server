@@ -6,9 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Created by arms on 25/10/2559.
- */
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Integer> {
     List<Task> findAllByProjectId(int projectId);

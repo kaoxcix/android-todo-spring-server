@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Created by Rabbit on 29-Oct-16.
- */
 @RestController
 @RequestMapping("tasks")
 public class TaskController {
@@ -29,19 +26,18 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getTask(@PathVariable("id") int id) {
-        return new ResponseEntity(taskService.findTaskById(id), HttpStatus.OK);
+    public ResponseEntity<Task> getTask(@PathVariable("id") int id) {
+        return new ResponseEntity<>(taskService.findTaskById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody TaskForm taskForm) {
-       return new ResponseEntity(taskService.save(taskForm), HttpStatus.OK);
+    public ResponseEntity<Task> create(@RequestBody TaskForm taskForm) {
+       return new ResponseEntity<>(taskService.save(taskForm), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity edit(@PathVariable("id") int id,
-                               @RequestParam(value = "status", required = false) Boolean status) {
-        return new ResponseEntity(taskService.updateTaskStatus(id,status), HttpStatus.OK);
+    public ResponseEntity<Task> edit(@RequestBody TaskForm taskForm) {
+        return new ResponseEntity<>(taskService.update(taskForm), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
