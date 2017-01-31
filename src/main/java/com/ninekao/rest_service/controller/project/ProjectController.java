@@ -66,6 +66,8 @@ public class ProjectController {
         if (project == null) {
             System.out.println("Project with id " + id + " not found");
             return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);
+        } else {
+            projectForm.setId(id);
         }
 
         return new ResponseEntity<Project>(projectService.update(projectForm), HttpStatus.OK);

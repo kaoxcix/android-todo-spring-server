@@ -57,6 +57,8 @@ public class TaskController {
         if (task == null) {
             System.out.println("Task with id " + id + " not found");
             return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
+        } else {
+            taskForm.setId(id);
         }
 
         return new ResponseEntity<>(taskService.update(taskForm), HttpStatus.OK);
