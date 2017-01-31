@@ -17,38 +17,72 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
-//    @Autowired
-//    private TaskService taskService;
-
     @GetMapping
-    public List<Project> getAllProject() {
-        return projectService.findAllProject();
+    public ResponseEntity<List<Project>> getAllProject() {
+
+        List<Project> tasks = projectService.findAllProject();
+
+        if (tasks.isEmpty()) {
+            System.out.println("Project not found");
+            return new ResponseEntity<List<Project>>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<List<Project>>(tasks, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getProject(@PathVariable("id") int id) {
-        return new ResponseEntity(projectService.findProjectById(id), HttpStatus.OK);
+    public ResponseEntity<Project> getProject(@PathVariable("id") int id) {
+        Project project = projectService.findProjectById(id);
+
+        if (project == null) {
+            System.out.println("Project with id " + id + " not found");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<Project>(project, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/tasks")
-    public List<Task> getTask(@PathVariable("id") int id) {
-        return projectService.findTaskByProjectId(id);
+    public ResponseEntity<List<Task>> getTask(@PathVariable("id") int id) {
+        List<Task> tasks = projectService.findTaskByProjectId(id);
+
+        if (tasks.isEmpty()) {
+            System.out.println("Task with project id " + id + " not found");
+            return new ResponseEntity<List<Task>>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<List<Task>>(tasks, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody ProjectForm projectForm) {
-        return new ResponseEntity(projectService.save(projectForm), HttpStatus.OK);
+    public ResponseEntity<Project> create(@RequestBody ProjectForm projectForm) {
+        return new ResponseEntity<Project>(projectService.save(projectForm), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity edit(@RequestBody ProjectForm projectForm) {
-        return new ResponseEntity(projectService.update(projectForm), HttpStatus.OK);
+    public ResponseEntity<Project> edit(@PathVariable("id") int id, @RequestBody ProjectForm projectForm) {
+        Project project = projectService.findProjectById(id);
+
+        if (project == null) {
+            System.out.println("Project with id " + id + " not found");
+            return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<Project>(projectService.update(projectForm), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable("id") int projectId) {
-        projectService.delete(projectId);
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity<Project> delete(@PathVariable("id") int id) {
+
+        Project project = projectService.findProjectById(id);
+
+        if (project == null) {
+            System.out.println("Unable to delete. Project with id " + id + " not found");
+            return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);
+        }
+
+        projectService.delete(id);
+        return new ResponseEntity<Project>(HttpStatus.NO_CONTENT);
     }
 
 }
