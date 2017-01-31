@@ -11,11 +11,11 @@ public class Task {
 
     @Id
     @GeneratedValue
-    public int id;
-    public String name;
-    public Boolean status;
-    public Date createdDate;
-    public Date updatedDate;
+    private int id;
+    private String name;
+    private Boolean status;
+    private Date createdDate;
+    private Date updatedDate;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "project_id")

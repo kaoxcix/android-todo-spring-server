@@ -11,10 +11,10 @@ import java.util.List;
 public class Project {
     @Id
     @GeneratedValue
-    public int id;
-    public String name;
-    public Date createdDate;
-    public Date updatedDate;
+    private int id;
+    private String name;
+    private Date createdDate;
+    private Date updatedDate;
     @JsonIgnore
     @OneToMany
     @JoinColumn(name = "project_id")
