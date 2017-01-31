@@ -14,7 +14,7 @@ import java.util.List;
 public class TaskService {
 
     @Autowired
-    TaskRepository taskRepository;
+    private TaskRepository taskRepository;
 
     public List<Task> findTaskByProjectId(int projectId){
         return taskRepository.findAllByProjectId(projectId);
