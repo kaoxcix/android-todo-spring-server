@@ -4,10 +4,12 @@ import com.ninekao.rest_service.controller.project.ProjectForm;
 import com.ninekao.rest_service.domain.entity.Project;
 import com.ninekao.rest_service.domain.entity.Task;
 import com.ninekao.rest_service.domain.repository.ProjectRepository;
+import com.ninekao.rest_service.domain.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +20,10 @@ public class ProjectService {
 
     @Autowired
     private ProjectRepository projectRepository;
-    
+
+    @Autowired
+    private TaskRepository taskRepository;
+
     public List<Project> findAllProject() {
         return projectRepository.findAll();
     }
@@ -37,6 +42,7 @@ public class ProjectService {
         project.setName(projectForm.getName());
         project.setCreatedDate(date);
         project.setUpdatedDate(date);
+        project.setTasks(new ArrayList<Task>());
         return projectRepository.save(project);
     }
 
@@ -48,7 +54,10 @@ public class ProjectService {
     }
 
     public void delete(int projectId) {
-        projectRepository.delete(projectId);
+        taskRepository.deleteByProjectId(projectId);
+        if(taskRepository.findAllByProjectId(projectId).isEmpty()) {
+            projectRepository.delete(projectId);
+        }
     }
     
 }
