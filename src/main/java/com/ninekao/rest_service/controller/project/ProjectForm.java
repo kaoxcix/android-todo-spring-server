@@ -1,9 +1,5 @@
 package com.ninekao.rest_service.controller.project;
 
-/**
- * Created by Kabiz on 29/10/2559.
- */
-
 public class ProjectForm {
 
     private int id;
