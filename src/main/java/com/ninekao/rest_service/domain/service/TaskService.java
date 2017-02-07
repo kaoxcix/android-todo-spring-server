@@ -39,7 +39,7 @@ public class TaskService {
 
         Task task = new Task();
         task.setName(taskForm.getName());
-        task.setStatus(false);
+        task.setStatus(taskForm.getStatus());
         task.setCreatedDate(date);
         task.setUpdatedDate(date);
         task.setProject(project);
