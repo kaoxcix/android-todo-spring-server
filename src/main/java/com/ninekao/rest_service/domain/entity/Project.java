@@ -16,8 +16,7 @@ public class Project {
     private Date createdDate;
     private Date updatedDate;
     @JsonIgnore
-    @OneToMany
-    @JoinColumn(name = "project_id")
+    @OneToMany(cascade=CascadeType.REMOVE, mappedBy="project")
     private List<Task> tasks;
 
     public int getId() {

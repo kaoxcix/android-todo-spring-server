@@ -54,10 +54,7 @@ public class ProjectService {
     }
 
     public void delete(int projectId) {
-        taskRepository.deleteByProjectId(projectId);
-        if(taskRepository.findAllByProjectId(projectId).isEmpty()) {
-            projectRepository.delete(projectId);
-        }
+        projectRepository.delete(projectId);
     }
     
 }

@@ -60,7 +60,4 @@ public class TaskService {
         taskRepository.delete(taskId);
     }
 
-    public List<Task> deleteByProjectId(int projectId) {
-        return taskRepository.deleteByProjectId(projectId);
-    }
 }
